@@ -1,9 +1,14 @@
 class cassandra::install {
+    $jre_name = $::osfamily ? {
+        'Debian'    => 'openjdk-7-jre',
+        'RedHat'    => 'java-1.7.0-openjdk',
+        default     => 'openjdk-7-jre',
+    }
 
     if !defined (Package['java']) {
       package { 'java':
         ensure  => installed,
-        name    => 'openjdk-7-jre'
+        name    => $jre_name,
       }
     }
 
